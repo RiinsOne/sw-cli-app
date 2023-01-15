@@ -19,10 +19,11 @@ PRIORITIES = {
     'h': 'High',
     'c': 'Crucial',
 }
+priorities = list(PRIORITIES.keys())
 
 
 @click.command()
-@click.argument('priority', type=click.Choice(PRIORITIES.keys()), default='m')
+@click.argument('priority', type=click.Choice(priorities), default='m')
 @click.argument('todofile', type=click.Path(exists=False), required=0)
 @click.option('-n', '--name', prompt='Enter the todo name', help='The name of the todo item')
 @click.option('-d', '--desc', prompt='Describe the todo', help='The description of the todo')
@@ -44,7 +45,7 @@ def delete_todo(idx):
 
 
 @click.command()
-@click.option('-p', '--priority', type=click.Choice(PRIORITIES.keys()))
+@click.option('-p', '--priority', type=click.Choice(priorities))
 @click.argument('todofile', type=click.Path(exists=True), required=0)
 def list_todos(priority, todofile):
     filename = todofile if todofile is not None else 'mytodos.txt'
@@ -63,7 +64,6 @@ mycommands.add_command(hello)
 mycommands.add_command(add_todo)
 mycommands.add_command(delete_todo)
 mycommands.add_command(list_todos)
-
 
 if __name__ == '__main__':
     mycommands()
